@@ -6,6 +6,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from model.event_registration import EventRegistration
+from service.event_list_service import EventListService
 
 app = Flask(__name__)
 
@@ -17,6 +18,9 @@ else:
     app.config.from_object("config.DevelopmentConfig")
 
 db = SQLAlchemy(app)
+event_list_service = EventListService(db, app)
+
+event_list_service.update_event_list()
 
 @app.route("/event", methods=["POST"])
 def event():
