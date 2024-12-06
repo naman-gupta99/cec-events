@@ -20,8 +20,6 @@ else:
 db = SQLAlchemy(app)
 event_list_service = EventListService(db, app)
 
-event_list_service.update_event_list()
-
 @app.route("/event", methods=["POST"])
 def event():
     data = request.get_json()
@@ -36,6 +34,13 @@ def event():
     db.session.commit()
 
     return jsonify({"message": "Registration successful"}), 201
+
+@app.route("/events", methods=["GET"])
+def get_all_events():
+    events = event_list_service.get_all_events()
+    events.sort(key=lambda e: e.get_event_date())
+    event_data = list(map(lambda e: e.to_dict(), events))
+    return jsonify(event_data)
 
 if __name__ == '__main__':
     app.run()

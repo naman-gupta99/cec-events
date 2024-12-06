@@ -1,5 +1,6 @@
 from service.rss_feed_service import RssFeedService
 from flask_sqlalchemy import SQLAlchemy
+from model.event import Event
 
 class EventListService:
     def __init__(self, event_list_repository: SQLAlchemy, app):
@@ -15,3 +16,6 @@ class EventListService:
                 self.event_list_repository.session.commit()
         except Exception as e:
             print(f"Failed to update event list: {e}")
+    
+    def get_all_events(self):
+        return self.event_list_repository.session.query(Event).all()
