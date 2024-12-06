@@ -19,6 +19,7 @@ else:
 
 db = SQLAlchemy(app)
 event_list_service = EventListService(db, app)
+event_list_service.update_event_list()
 
 @app.route("/event", methods=["POST"])
 def event():

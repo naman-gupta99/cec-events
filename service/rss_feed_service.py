@@ -22,7 +22,8 @@ class RssFeedService:
         title = item.find("title").text
         description = item.find("description").text
         link = item.find("link").text
+        id = int(link[-10:])
         category = item.find("category").text
         pub_date = item.find("pubDate").text
 
-        return Event(title=title, description=description, link=link, category=category, pub_date=pub_date)
+        return Event(id = id, title=title, description=description, link=link, category=category, pub_date=pub_date)
