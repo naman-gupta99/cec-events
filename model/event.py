@@ -12,7 +12,7 @@ class Event(db.Model):
     pub_date = db.Column(db.DateTime, nullable=False)
 
     def get_event_date(self):
-        return self.category[:10][::-1]
+        return '-'.join(self.category[:10].split('-')[::-1])
 
     def to_dict(self):
         return {
